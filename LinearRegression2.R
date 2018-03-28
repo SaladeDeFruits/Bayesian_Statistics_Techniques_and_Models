@@ -186,6 +186,7 @@ mod3 = jags.model(textConnection(mod3_string),
                   data = data3_jags, 
                   inits = inits3,
                   n.chains = 3)
+
 # Run the model for 1000, but not keep the samples
 update(mod3, 1000)
 # create the acutal simulation which we would like to keep

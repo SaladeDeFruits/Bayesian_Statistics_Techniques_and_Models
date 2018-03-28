@@ -41,7 +41,6 @@ mod_csim = as.mcmc(do.call(rbind, mod_sim))
 ## convergence diagnostics
 ## this is to test if we could accept the posterior distribution
 plot(mod_sim)
-
 gelman.diag(mod_sim)
 autocorr.diag(mod_sim)
 autocorr.plot(mod_sim)
@@ -76,4 +75,26 @@ var( resid[ which(badhealth$badh == 0)])
 var( resid[ which(badhealth$badh == 1)])
 
 summary(mod_sim)
+x1 = c(0, 35, 0)
+x2 = c(1, 35, 35)
+head(mod_csim)
+
+loglam1 = mod_csim[,"int"] + mod_csim[,c(2,1,3)] %*% x1
+loglam2 = mod_csim[,"int"] + mod_csim[,c(2,1,3)] %*% x2
+
+lam1 = exp(loglam1)
+lam2 = exp(loglam2)
+
+plot( density(lam1) )
+plot( density(lam2) )
+
+n_sim = length(lam1)
+
+y1 = rpois(n_sim, lam1)
+y2 = rpois(n_sim, lam2)
+
+plot( table(factor(y1, levels = 0:18))/n_sim )
+points( table(factor(y2+0.1))/n_sim, col = "red")
+
+mean( y2 > y1 )
 

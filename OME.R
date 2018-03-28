@@ -52,10 +52,10 @@ mod_sim = coda.samples(model = mod,
                        n.iter = 5e3)
 mod_csim = as.mcmc(do.call(rbind, mod_sim))
 plot(mod_sim)
-summary(mod_sim)
-X1 = cbind( rep(1.0, data3_jags$n), 
-            data3_jags$log_income, 
-            data3_jags$is_oil)
+summary(mod_csim)
+#X1 = cbind( rep(1.0, data_jags$n), 
+#            data_jags$log_income, 
+#            data_jags$is_oil)
 head(data_jags)
 
 (phat = colMeans( mod_csim[,713:1424] ))
